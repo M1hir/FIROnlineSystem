@@ -1,37 +1,3 @@
-<?php  
-        include("db_connection.php");  
-        
-        $view_users_query="select * from complaintdb"; 
-        $run=mysqli_query($dbcon,$view_users_query);
-        while($row=mysqli_fetch_array($run))
-        {  
-            
-  $station=$row[10]; 
-    $subject= $row[11]; 
-    $type=$row[3];  
-    $name=$row[3]; ; 
-    $address=$row[4]; ;
-    
-    $postal=$row[5]; 
-    $phone=$row[6];  
-    $email=$row[7]; 
-    $complaint=$row[8];   
-    $place=$row[11]; 
-    $occupation=$row[10]; 
-
-    $description=$row[9]; 
-    $incident_date=$row[13]; 
-
-    $incident_time=$row[14]; 
-
-    $statusid=$row[15]; 
-
-    $comments=$row[16]; 
-
-  
-         
-  } ?>  
-  
 
 
 <!DOCTYPE html>
@@ -129,7 +95,45 @@
             <th>Time</th>
             <th>Status ID</th>
         </tr>  
-        </thead>  
+        </thead> 
+
+
+
+
+		
+		<?php  
+        include("db_connection.php");  
+        
+        $view_users_query="select * from compaintdb"; 
+        $run=mysqli_query($dbcon,$view_users_query);
+        while($row=mysqli_fetch_array($run))
+        {  
+            
+  $station=$row['stationname']; 
+    $subject= $row['subject']; 
+    $type=$row['type'];  
+    $name=$row['compName']; ; 
+    $address=$row['address']; ;
+    
+    $postal=$row['postCode']; 
+    $phone=$row['mobileNo'];  
+    $email=$row['emailId']; 
+    $complaint=$row['complaint'];   
+    $place=$row['place']; 
+    $occupation=$row['occupation']; 
+
+    $description=$row['description']; 
+    $incident_date=$row['fir_date']; 
+
+    $incident_time=$row['time_incident']; 
+
+    $statusid=$row['statusid']; 
+
+    $comments=$row['comments']; 
+
+  ?>
+    
+		
         <tr>  
 <!--here showing results in the table -->  
             <td><?php echo $station;  ?></td>  
@@ -158,6 +162,11 @@
             <td><?php echo $incident_time;  ?></td>  
 
         </tr>  
+
+<?php	
+  } 
+  
+  ?>  
         
   </table>
     
