@@ -8,9 +8,12 @@ $rows=mysqli_fetch_array($run);
   $station = $rows['station'];
   $phone='';
   $address='';
+  $gender='';
+  $age='';
   $email='';
   $postCode='';
   $cname='';
+  $occupation='';
  if(isset($_POST['mobilesearch']))  
   {  
 $check_user2="select * from compaintdb WHERE mobileNo ='".$_POST['mymobile']."'";
@@ -23,6 +26,7 @@ $check_user2="select * from compaintdb WHERE mobileNo ='".$_POST['mymobile']."'"
   $email=$rows['emailId'];
   $postCode=$rows['postCode'];
   $cname=$rows['compName'];
+  $occupation=$rows['occupation'];
    }
   }  
 ?>
@@ -39,6 +43,8 @@ if(isset($_POST['form-filled']))
     
     $postal=$_POST['postal'] . ""; 
     $phone=$_POST['phone'] . ""; 
+    $gender=$_POST['gender'] . ""; 
+    $age=$_POST['age'] . ""; 
     $email=$_POST['email'] . ""; 
     $complaint=$_POST['complaint'] . "";  
     $place=$_POST['place'] . "";
@@ -54,7 +60,7 @@ if(isset($_POST['form-filled']))
     $comments=$_POST['comments'] . "";
   
 
-    $insert_user="insert into compaintdb(stationname, subject, complaint, compName, address, postCode, mobileNo, emailId, place,occupation,description,fir_date,time_incident,statusid,comments) values('$station', '$subject', '$complaint', '$name', '$address', '$postal', '$phone',  '$email', '$place','$occupation','$description',' $incident_date',' $incident_time', '$statusid',' $comments')"; 
+    $insert_user="insert into compaintdb(stationname, subject, type, complaint, compName, address, postCode, mobileNo, gender, age, emailId, place,occupation,description,fir_date,time_incident,statusid,comments) values('$station', '$subject', '$type', '$complaint', '$name', '$address', '$postal', '$phone',  '$gender',  '$age', '$email', '$place','$occupation','$description',' $incident_date',' $incident_time', '$statusid',' $comments')"; 
     $run=mysqli_query($dbcon,$insert_user);
 }
 ?> 
@@ -192,14 +198,14 @@ if(isset($_POST['form-filled']))
               <label class="control-label">Select input</label>
               <div class="controls">
                 <select id="type" name="type" >
-                  <option value="robbery">Robbery</option>
-                  <option value="Lost">Lost</option>
-                  <option value="kidnap">Kindapping</option>
-                  <option value="rape">Rape</option>
-                  <option value="assault">Assualt</option>
-                  <option value="homicide">Homicide</option>
-                  <option value="theft">Theft</option>
-                  <option value="violence">Domestic Violence</option>
+                  <option value="robbery" name="robbery">Robbery</option>
+                  <option value="lost" name="lost">Lost</option>
+                  <option value="kidnap" name="kidnap">Kindapping</option>
+                  <option value="rape" name="rape">Rape</option>
+                  <option value="assault" name="assault">Assualt</option>
+                  <option value="homicide" name="homicide" >Homicide</option>
+                  <option value="theft" name="theft">Theft</option>
+                  <option value="violence" name="violence">Domestic Violence</option>
 
                 </select>
               </div>
@@ -229,6 +235,18 @@ if(isset($_POST['form-filled']))
               </div>
             </div>
             <div class="control-group">
+              <label class="control-label">Gender :</label>
+              <div class="controls">
+                <input type="text" class="span11" name="gender" value="<?php echo $gender ?>" placeholder=" Gender" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Age :</label>
+              <div class="controls">
+                <input type="text" class="span11" name="age" value="<?php echo $age ?>" placeholder=" Age" />
+              </div>
+            </div>
+            <div class="control-group">
               <label class="control-label">Email:</label>
               <div class="controls">
                 <input type="text" class="span11" name="email" value="<?php echo $email ?>"  placeholder=" Email" />
@@ -237,7 +255,7 @@ if(isset($_POST['form-filled']))
             <div class="control-group">
               <label class="control-label">Occupation/Profession:</label>
               <div class="controls">
-                <input type="text" class="span11" name="occupation"  placeholder=" occupation" />
+                <input type="text" class="span11" name="occupation"  placeholder=" occupation" value="<?php echo $occupation ?>"/>
               </div>
             </div>
             <div class="control-group">

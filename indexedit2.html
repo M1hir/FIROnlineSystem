@@ -41,7 +41,7 @@
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
-    <li class="active"><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="active"><a href="login.php"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
     <li> <a href="#tab1"><i class="icon icon-signal"></i> <span>Current graphs</span></a> </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Forms</span> <span class="label label-important">2</span></a>
       <ul>
@@ -79,7 +79,7 @@
         
         <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
         <li class="bg_lo span3"> <a href="form-common.php"> <i class="icon-th-list"></i>File FIR </a> </li>
-        <li class="bg_lg "> <a href="report.php"> <i class="icon-search"></i> View FIR</a> </li>
+        <li class="bg_lg "> <a href="reports.php"> <i class="icon-search"></i> View FIR</a> </li>
         <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
       </ul>
     </div>
@@ -87,28 +87,7 @@
 
 <!--Chart-box-->    
     <div class="row-fluid">
-      <div class="widget-box">
-        <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>Site Analytics</h5>
-        </div>
-        <div class="widget-content" >
-          <div class="row-fluid">
-            <div class="span9">
-              <div class="chart"></div>
-            </div>
-            <div class="span3">
-              <ul class="site-stats">
-                <li class="bg_lh"><i class="icon-user"></i> <strong>3055</strong> <small>Total Entries</small></li>
-                <li class="bg_lh"><i class="icon-plus"></i> <strong>80</strong> <small>New Entries </small></li>
-                
-                <li class="bg_lh"><i class="icon-tag"></i> <strong>4135</strong> <small>Total Cases</small></li>
-                <li class="bg_lh"><i class="icon-repeat"></i> <strong>500</strong> <small>Pending Cases</small></li>
-                <li class="bg_lh"><i class="icon-tag"></i> <strong>50</strong> <small>Ongoing Cases</small></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
 <!--End-Chart-box--> 
     <hr/>
@@ -160,7 +139,7 @@
         
       </div>
       <div class="span6">
-        <div class="widget-box widget-chat">
+       <div class="widget-box widget-chat">
           <div class="widget-title bg_lb"> <span class="icon"> <i class="icon-comment"></i> </span>
             <h5>Chat Option</h5>
           </div>
@@ -175,7 +154,7 @@
                   <li id="user-Officer Riya"><a href=""><img alt="" src="img/demo/av2.jpg" /> <span>Officer Riya</span></a></li>
                   <li id="user-Constable Mihir" class="online new"><a href=""><img alt="" src="img/demo/av3.jpg" /> <span>Constable Mihir</span></a><span class="msg-count badge badge-info">3</span></li>
                   <li id="user-Officer Vasudha" class="online"><a href=""><img alt="" src="img/demo/av4.jpg" /> <span>Officer Vasudha</span></a></li>
-                 </ul>
+                  </ul>
               </div>
             </div>
             <div class="chat-content panel-left2">
@@ -190,6 +169,7 @@
             </div>
           </div>
         </div>
+        
         
         
         <div class="widget-box">
@@ -239,9 +219,11 @@
 <script src="js/matrix.chat.js"></script> 
 <script src="js/jquery.validate.js"></script> 
 <script src="js/matrix.form_validation.js"></script> 
+
+<script src="js/jquery.gritter.min.js"></script> 
 <script src="js/jquery.wizard.js"></script> 
 <script src="js/jquery.uniform.js"></script> 
-<script src="js/select2.min.js"></script> 
+<script src="js/select2.min.js"></script> 	
 <script src="js/matrix.popover.js"></script> 
 <script src="js/jquery.dataTables.min.js"></script> 
 <script src="js/matrix.tables.js"></script> 

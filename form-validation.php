@@ -51,8 +51,11 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
   $email=$rows['emailId'];
   $postCode=$rows['postCode'];
   $cname=$rows['compName'];
-  
-
+  $occupation=$rows['occupation'];
+  $fir_date=$rows['fir_date'];
+  $time_incident=$rows['time_incident'];
+  $description=$rows['description'];
+	
    }
   }
 ?>
@@ -116,7 +119,7 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
               <<div class="control-group">
               <label class="control-label">Name of Victim :</label>
               <div class="controls">
-                <input type="text" class="span11" name="name" placeholder=" name" value="<?php echo $cname ?>" />
+                <input type="text" class="span11" name="name" placeholder=" name" value="<?php if(isset($_POST['mobilesearch'])) echo $cname ?>" />
               </div>
             </div>
             
@@ -124,26 +127,26 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
               <div class="control-group">
               <label class="control-label">Email:</label>
               <div class="controls">
-                <input type="text" class="span11" name="email" value="<?php echo $email ?>"  placeholder=" Email" />
+                <input type="text" class="span11" name="email" value="<?php if(isset($_POST['mobilesearch'])) echo $email ?>"  placeholder=" Email" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label">Phone :</label>
               <div class="controls">
-                <input type="text" class="span11" name="phone" value="<?php echo $phone ?>" placeholder=" Phone" />
+                <input type="text" class="span11" name="phone" value="<?php if(isset($_POST['mobilesearch']))  echo $phone ?>" placeholder=" Phone" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label">Address :</label>
               <div class="controls">
-                <input type="text" class="span11" name="address"  placeholder=" Address"  value="<?php echo $address ?>"/>
+                <input type="text" class="span11" name="address"  placeholder=" Address"  value="<?php if(isset($_POST['mobilesearch']))  echo $address ?>"/>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label">Postal Code</label>
               <div class="controls">
-                <input type="text" class="span11" name="postal" value="<?php echo $postCode ?>" placeholder=" Postal Code" />
+                <input type="text" class="span11" name="postal" value="<?php if(isset($_POST['mobilesearch']))  echo $postCode ?>" placeholder=" Postal Code" />
               </div>
             </div>
 
@@ -195,15 +198,25 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
 
 
 
-<div id="kachhra">
+<div id="ReportFIR" style="visibility: hidden; height:0; margin-top: -250px;">
 
 <center>
 
 <h3>Certificate</h3>
-
-<p> This is to certify that  Mr./Mrs/Ms. <?php echo $cname;?>.</p>
-
 </center>
+
+<p> This is to certify that  Mr./Mrs/Ms. <?php echo $cname;?>,
+<br> age 20, occupation <?php echo $occupation;?>,
+<br> address <?php echo $address;?>,
+<br> has personally appeared at the Police Station,
+<br> on <?php echo $fir_date;?> at <?php echo $time_incident;?>.
+<br><br>The First Information Report filed is as follows:
+<br>
+<?php echo $description	;?>
+
+</p>
+   
+
 
 </div>
 
@@ -220,13 +233,17 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
 
 
 (function() {
- var form = $('#kachhra'),
+ var form = $('#ReportFIR'),
   cache_width = form.width(),
   a4 = [595.28, 841.89]; // for a4 size paper width and height
 
  $('#clickbait').on('click', function() {
   $('body').scrollTop(0);
+  
+  $('#ReportFIR').css('visibility', 'visible').css('height', 'auto').css('margin-top', '0px');
   createPDF();
+  $('#ReportFIR').css('visibility', 'hidden').css('height', '0px').css('margin-top', '-150px');
+  
  });
  //create pdf
  function createPDF() {
@@ -238,7 +255,7 @@ $check_user2="select * from compaintdb WHERE mobileNo =".$var."";
      format: 'a4'
     });
    doc.addImage(img, 'JPEG', 20, 20);
-   doc.save('techumber-html-to-pdf.pdf');
+   doc.save('FIR Report.pdf');
    form.width(cache_width);
   });
  }

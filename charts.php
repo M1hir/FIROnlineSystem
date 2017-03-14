@@ -3,13 +3,15 @@
 <head>
 <title>FIR Online</title>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />	
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="css/matrix-style.css" />
 <link rel="stylesheet" href="css/matrix-media.css" />
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
+
 </head>
 <body>
 
@@ -40,13 +42,12 @@
 
 <div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-signal"></i> Charts &amp; graphs</a>
   <ul>
-    <li><a href="indexedit2.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li class="active"> <a href="charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Forms</span> <span class="label label-important">3</span></a>
+    <li><a href="Login.php"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="active"> <a href="charts.php"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Forms</span> <span class="label label-important">2</span></a>
       <ul>
-        <li><a href="form-common.html">Basic Form</a></li>
-        <li><a href="form-validation.html">Form with Validation</a></li>
-        <li><a href="form-wizard.html">Form with Wizard</a></li>
+        <li><a href="form-common.php">File FIR</a></li>
+        <li><a href="form-validation.php">Issue NOC</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>Addons</span> <span class="label label-important">3</span></a>
@@ -62,7 +63,7 @@
 </div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Charts &amp; graphs</a></div>
+    <div id="breadcrumb"><a href="Login.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Charts &amp; graphs</a></div>
     <h1>Charts &amp; graphs</h1>
   </div>
   <div class="container-fluid">
@@ -95,6 +96,123 @@
         </div>
       </div>
     </div>
+	
+	
+	
+<?php
+session_start();
+include("db_connection.php"); 
+$check_user2="select * from compaintdb";
+    $run=mysqli_query($dbcon,$check_user2);  
+	$count = 0;
+	$new = 0;
+	$open = 0;
+	
+	$maleArr = []; $femaleArr = [];
+
+for ($i = 0; $i < 100; $i++)
+{
+    array_push($maleArr, 0);
+    array_push($femaleArr, 0);
+    //or $array[] = $some_data; for single items.
+}
+
+while($row=mysqli_fetch_array($run))
+{
+	$count=$count+1;
+	$complaintdate = substr( $row['complaint_date'] , 0, 10);
+	$today = date("Y-m-d");
+	if($today==$complaintdate)
+	{
+		$new=$new+1;
+	}
+	if($row['statusid']=='Open')
+	{
+		$open=$open+1;
+	}
+
+
+
+	if($row['gender']==1) //MALE
+	{
+		$maleArr[($row['age'])]++;
+	}
+	else //FEMALE
+	{
+		$femaleArr[($row['age'])]++;
+	}
+}
+
+
+
+$closed=$count-$open;
+
+$type_0=0;
+$type_1=0;
+$type_2=0;
+$type_3=0;
+$type_4=0;
+$type_5=0;
+$type_6=0;
+$type_7=0;
+$query="select type from compaintdb";
+$run=mysqli_query($dbcon,$query);
+while($row=mysqli_fetch_array($run))
+{
+	
+	$t=$row['type'];
+	if($t=='robbery')
+	{
+		$type_0=$type_0+1;
+	}
+	if($t=='lost')
+	{
+		$type_1=$type_1+1;
+	}
+	if($t=='kidnap')
+	{
+		$type_2=$type_2+1;
+	}
+	if($t=='rape')
+	{
+		$type_3=$type_3+1;
+	}
+	if($t=='assault')
+	{
+		$type_4=$type_4+1;
+	}
+	if($t=='homicide')
+	{
+		$type_5=$type_5+1;
+	}
+	if($t=='theft')
+	{
+		$type_6=$type_6+1;
+	}
+	if($t=='violence')
+	{
+		$type_7=$type_7+1;
+	}
+}
+
+$full = $type_0 +$type_1 + $type_2  + $type_3  + $type_4  + $type_5  + $type_6  + $type_7; 
+
+		$type_0=($type_0/$full)*100;
+		$type_1=($type_1/$full)*100;
+		$type_2=($type_2/$full)*100;
+		$type_3=($type_3/$full)*100;
+		$type_4=($type_4/$full)*100;
+		$type_5=($type_5/$full)*100;
+		$type_6=($type_6/$full)*100;
+		$type_7=($type_7/$full)*100;
+		
+		$tempi=1;
+		$temp_j=1;
+?>
+
+
+
+
     <div class="widget-box widget-plain">
       <div class="center">
         <ul class="stat-boxes2">
@@ -102,45 +220,36 @@
             <div class="left peity_bar_neutral"><span><span style="display: none;">2,4,9,7,12,10,12</span>
               <canvas width="50" height="24"></canvas>
               </span>+10%</div>
-            <div class="right"> <strong>15598</strong> Visits </div>
+            <div class="right"> <strong><?php echo $count; ?></strong> Total Reports </div>
           </li>
           <li>
             <div class="left peity_line_neutral"><span><span style="display: none;">10,15,8,14,13,10,10,15</span>
               <canvas width="50" height="24"></canvas>
               </span>10%</div>
-            <div class="right"> <strong>150</strong> New Users </div>
+            <div class="right"> <strong><?php echo $new; ?></strong> New Reports </div>
           </li>
           <li>
             <div class="left peity_bar_bad"><span><span style="display: none;">3,5,6,16,8,10,6</span>
               <canvas width="50" height="24"></canvas>
               </span>-40%</div>
-            <div class="right"> <strong>4560</strong> Orders</div>
+            <div class="right"> <strong><?php echo $open; ?></strong> Open Cases</div>
           </li>
           <li>
             <div class="left peity_line_good"><span><span style="display: none;">12,6,9,23,14,10,17</span>
               <canvas width="50" height="24"></canvas>
               </span>+60%</div>
-            <div class="right"> <strong>5672</strong> Active Users </div>
-          </li>
-          <li>
-            <div class="left peity_bar_good"><span>12,6,9,23,14,10,13</span>+30%</div>
-            <div class="right"> <strong>2560</strong> Register</div>
+            <div class="right"> <strong><?php echo $closed; ?></strong> Closed Cases </div>
           </li>
         </ul>
       </div>
     </div>
     <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-signal"></i> </span>
-            <h5>Bar chart</h5>
-          </div>
-          <div class="widget-content">
-            <div class="chart"></div>
-          </div>
-        </div>
-      </div>
+
     </div>
+	
+	
+	
+	
     <div class="row-fluid">
       <div class="span6">
         <div class="widget-box">
@@ -155,10 +264,10 @@
       <div class="span6">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-signal"></i> </span>
-            <h5>Line chart</h5>
+            <h5>Bar chart</h5>
           </div>
           <div class="widget-content">
-            <div class="bars"></div>
+            <div class="chart"></div>
           </div>
         </div>
       </div>
@@ -244,31 +353,27 @@ $(function () {
     var datasets = {
         "usa": {
             label: "USA",
-            data: [[1988, 483994], [1989, 479060], [1990, 457648], [1991, 401949], [1992, 424705], [1993, 402375], [1994, 377867], [1995, 357382], [1996, 337946], [1997, 336185], [1998, 328611], [1999, 329421], [2000, 342172], [2001, 344932], [2002, 387303], [2003, 440813], [2004, 480451], [2005, 504638], [2006, 528692]]
+            data: [[2000, 342], [2001, 344], [2002, 387], [2003, 440], [2004, 480], [2005, 504], [2006, 528]]
         },        
         "russia": {
             label: "Russia",
-            data: [[1988, 218000], [1989, 203000], [1990, 171000], [1992, 42500], [1993, 37600], [1994, 36600], [1995, 21700], [1996, 19200], [1997, 21300], [1998, 13600], [1999, 14000], [2000, 19100], [2001, 21300], [2002, 23600], [2003, 25100], [2004, 26100], [2005, 31100], [2006, 34700]]
+            data: [[2000, 181], [2001, 213], [2002, 236], [2003, 251], [2004, 261], [2005, 311], [2006, 347]]
         },
         "uk": {
             label: "UK",
-            data: [[1988, 62982], [1989, 62027], [1990, 60696], [1991, 62348], [1992, 58560], [1993, 56393], [1994, 54579], [1995, 50818], [1996, 50554], [1997, 48276], [1998, 47691], [1999, 47529], [2000, 47778], [2001, 48760], [2002, 50949], [2003, 57452], [2004, 60234], [2005, 60076], [2006, 59213]]
+            data: [[2000, 477], [2001, 486], [2002, 509], [2003, 574], [2004, 602], [2005, 600], [2006, 592]]
         },
         "germany": {
             label: "Germany",
-            data: [[1988, 55627], [1989, 55475], [1990, 58464], [1991, 55134], [1992, 52436], [1993, 47139], [1994, 43962], [1995, 43238], [1996, 42395], [1997, 40854], [1998, 40993], [1999, 41822], [2000, 41147], [2001, 40474], [2002, 40604], [2003, 40044], [2004, 38816], [2005, 38060], [2006, 36984]]
+            data: [[2000, 411], [2001, 404], [2002, 404], [2003, 400], [2004, 377], [2005, 380], [2006, 369]]
         },
         "denmark": {
             label: "Denmark",
-            data: [[1988, 3813], [1989, 3719], [1990, 3722], [1991, 3789], [1992, 3720], [1993, 3730], [1994, 3636], [1995, 3598], [1996, 3610], [1997, 3655], [1998, 3695], [1999, 3673], [2000, 3553], [2001, 3774], [2002, 3728], [2003, 3618], [2004, 3638], [2005, 3467], [2006, 3770]]
+            data: [[2000, 355], [2001, 377], [2002, 372], [2003, 361], [2004, 363], [2005, 346], [2006, 377]]
         },
         "sweden": {
             label: "Sweden",
-            data: [[1988, 6402], [1989, 6474], [1990, 6605], [1991, 6209], [1992, 6035], [1993, 6020], [1994, 6000], [1995, 6018], [1996, 3958], [1997, 5780], [1998, 5954], [1999, 6178], [2000, 6411], [2001, 5993], [2002, 5833], [2003, 5791], [2004, 5450], [2005, 5521], [2006, 5271]]
-        },
-        "norway": {
-            label: "Norway",
-            data: [[1988, 4382], [1989, 4498], [1990, 4535], [1991, 4398], [1992, 4766], [1993, 4441], [1994, 4670], [1995, 4217], [1996, 4275], [1997, 4203], [1998, 4482], [1999, 4506], [2000, 4358], [2001, 4385], [2002, 5269], [2003, 5066], [2004, 5194], [2005, 4887], [2006, 4891]]
+            data: [[2000, 641], [2001, 593], [2002, 583], [2003, 579], [2004, 540], [2005, 552], [2006, 527]]
         }
     };
 
@@ -313,4 +418,105 @@ $(function () {
 <!--Turning-series-chart-js-->
 <script src="js/matrix.dashboard.js"></script>
 </body>
+
+	<script>	
+    var data = [];
+	data[0] = { label: "robbery", data: <?php echo $type_0 ?> }
+	data[1] = { label: "lost", data: <?php echo $type_1 ?> }
+	data[2] = { label: "kidnap", data: <?php echo $type_2 ?> }
+	data[3] = { label: "rape", data: <?php echo $type_3 ?> }
+	data[4] = { label: "assault", data: <?php echo $type_4 ?> }
+	data[5] = { label: "homicide", data: <?php echo $type_5 ?> }
+	data[6] = { label: "theft", data: <?php echo $type_6 ?> }
+	data[7] = { label: "violence", data: <?php echo $type_7 ?> }
+	
+	var series = 4;
+	
+    var pie = $.plot($(".pie"), data,{
+        series: {
+            pie: {
+                show: true,
+                radius: 3/4,
+                label: {
+                    show: true,
+                    radius: 3/4,
+                    formatter: function(label, series){
+                        return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+                    },
+                    background: {
+                        opacity: 0.5,
+                        color: '#000'
+                    }
+                },
+                innerRadius: 0.2
+            },
+			legend: {
+				show: false
+			}
+		}
+	});	
+	
+	
+	
+	// === Prepare the chart data ===/
+	var sin = [], cos = [];
+	
+	
+		<?php for($tempi=0; $tempi<100; $tempi++) { ?>
+		if(!<?php echo $maleArr[$tempi]?> == 0)
+		{
+			sin.push([<?php echo $tempi?>, <?php echo $maleArr[$tempi]?>]);
+		}
+		<?php } ?>
+	
+	
+		<?php for($temp_j=0; $temp_j<100; $temp_j++) { ?>
+		if(!<?php echo $femaleArr[$temp_j]?> == 0)
+		{
+			cos.push([<?php echo $temp_j?>, <?php echo $femaleArr[$temp_j]?>]);
+		}
+		<?php } ?>
+
+	// === Make chart === //
+    var plot = $.plot($(".chart"),
+           [ { data: sin, label: "Male", color: "#ee7951"}, { data: cos, label: "Female",color: "#4fb9f0" } ], {
+               series: {
+                   lines: { show: true },
+                   points: { show: true }
+               },
+               grid: { hoverable: true, clickable: true },
+               yaxis: { min: 0, max: 10 }
+		   });
+    
+	// === Point hover in chart === //
+    var previousPoint = null;
+    $(".chart").bind("plothover", function (event, pos, item) {
+		
+        if (item) {
+            if (previousPoint != item.dataIndex) {
+                previousPoint = item.dataIndex;
+                
+                $('#tooltip').fadeOut(200,function(){
+					$(this).remove();
+				});
+                var x = item.datapoint[0].toFixed(2),
+					y = item.datapoint[1].toFixed(2);
+                    
+                maruti.flot_tooltip(item.pageX, item.pageY,item.series.label + " of " + x + " = " + y);
+            }
+            
+        } else {
+			$('#tooltip').fadeOut(200,function(){
+					$(this).remove();
+				});
+            previousPoint = null;           
+        }   
+    });	
+	
+	
+	
+	
+	
+	</script>
+	
 </html>
